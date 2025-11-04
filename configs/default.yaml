@@ -1,0 +1,42 @@
+# 数据
+data_root: "D:/files/datasets/eegem"        # 与你的基路径一致【:contentReference[oaicite:6]{index=6}】
+tasks: ["A","B","C"]
+subjects: ["S1","S2","S3"]
+blocks: [1,2,3,4,5]
+resample_hz: 128
+eeg_chans: 64
+eye_chans: 6
+trial_len: 1000   # ms
+bandpass: [0.1, 30]
+
+# 训练
+epochs: 100
+batch_size: 128
+optimizer: adam
+lr: 1.0e-3
+weight_decay: 0.0
+betas: [0.9, 0.999]
+scheduler: reduce_on_plateau   # 和你代码一致【:contentReference[oaicite:7]{index=7}】
+patience: 100
+n_folds: 5
+device: "cuda"
+
+# 模型
+model_name: "MUG_RSVP_Student"
+use_adapter: true
+adapter_dim: 32
+dropout: 0.5
+mc_dropout_passes: 0          # 用于不确定性估计
+distill:
+  enable: false                 # 如需CMD蒸馏可置true
+  teacher_ckpt: ""
+
+# 损失系数
+lambda_cls_eeg_eye: 0.3
+lambda_hsd: 1.0
+lambda_gate: 1.0
+lambda_bin: 1.0
+
+# 输出
+save_dir: "./save/MUG_RSVP"
+export_mat: true
